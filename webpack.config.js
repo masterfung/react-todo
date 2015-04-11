@@ -5,7 +5,11 @@ module.exports = {
   },
   module: {
     loaders: [
-      {test: /\.js$/, loader: 'jsx-loader'}
+      {
+        test: /\.js$/,
+        exclude: /node_modules/, 
+        loaders: [ 'babel' ]
+        }
     ]
   }
 };

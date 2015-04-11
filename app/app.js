@@ -12,7 +12,7 @@ let ToDo = React.createClass({
   }
 })
 
-React.render({
-  <Todo />
+React.render(
+  <ToDo />,
   document.querySelector('.container')
-})
+)

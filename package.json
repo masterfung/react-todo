@@ -1,7 +1,7 @@
 {
   "name": "react-todo-ts",
   "version": "0.0.1",
-  "description": "Typescript React Todo",
+  "description": "React Todo",
   "main": "index.html",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -18,15 +18,18 @@
   "author": "Tsung Hung",
   "license": "BSD",
   "bugs": {
-    "url": "https://github.com/masterfung/react-todo-ts/issues"
+    "url": "https://github.com/masterfung/react-todo/issues"
   },
-  "homepage": "https://github.com/masterfung/react-todo-ts",
+  "homepage": "https://github.com/masterfung/react-todo",
   "dependencies": {
     "react": "^0.13.1",
     "react-addons": "^0.9.1-deprecated",
     "webpack": "^1.8.4"
   },
   "devDependencies": {
-    "jsx-loader": "^0.13.1"
+    "babel-core": "^5.0.12",
+    "babel-loader": "^5.0.0",
+    "jsx-loader": "^0.13.1",
+    "webpack": "^1.8.4"
   }
 }
