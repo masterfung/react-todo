@@ -1,4 +1,5 @@
 let React = require('react/addons')
+let moment = require('moment')
 
 let AddItem = React.createClass({
   getInitialState(){
@@ -86,7 +87,8 @@ let ListContainer = React.createClass({
   getInitialState(){
     return {
       list: [],
-      name: "Stranger!"
+      name: "Stranger! Change Name Here",
+      time: new Date()
     }
   },
   handleAddItem(newItem) {
@@ -103,21 +105,23 @@ let ListContainer = React.createClass({
   },
   handleName(e) {
     this.setState({
-      value: e.target.value
+      name: e.target.value
     })
   },
   render() {
-    let name = this.state.value;
+    let name = this.state.name;
+    let time = this.state.time;
     return (
 
       <div className="col-sm-6 col-md-offset-3">
-          <h1 className="text-center">Welcome!
-            <div className="col-sm-12 text-center">
+          <h1 className="text-center">Welcome! Your Todo List</h1>
+          {time}
+          <div className="col-sm-12 text-center">
+            <h5 className='text-center'>Enter your name:
               <input type="text" value={name} onChange={this.handleName} />
-            </div>
-          </h1>
-
-          <h2 className="text-center"> Todo List </h2>
+            </h5>
+          </div>
+          <h2 className="text-center"> </h2>
           <AddItem add={this.handleAddItem}/>
           <List items={this.state.list} remove={this.handleRemoveItem}/>
       </div>
