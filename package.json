@@ -22,6 +22,11 @@
   },
   "homepage": "https://github.com/masterfung/react-todo-ts",
   "dependencies": {
-    "react-addons": "^0.9.1-deprecated"
+    "react": "^0.13.1",
+    "react-addons": "^0.9.1-deprecated",
+    "webpack": "^1.8.4"
+  },
+  "devDependencies": {
+    "jsx-loader": "^0.13.1"
   }
 }

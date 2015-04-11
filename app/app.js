@@ -1,4 +1,4 @@
-import * as React from "react/addons";
+let React = require('react')
 
 let ToDo = React.createClass({
   render(){
