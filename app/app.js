@@ -1,4 +1,4 @@
-let React = require('react')
+let React = require('react/addons')
 
 let AddItem = React.createClass({
   getInitialState(){
@@ -85,7 +85,8 @@ let List = React.createClass({
 let ListContainer = React.createClass({
   getInitialState(){
     return {
-      list: []
+      list: [],
+      name: "Stranger!"
     }
   },
   handleAddItem(newItem) {
@@ -100,14 +101,25 @@ let ListContainer = React.createClass({
       list: newList
     })
   },
+  handleName(e) {
+    this.setState({
+      value: e.target.value
+    })
+  },
   render() {
+    let name = this.state.value;
     return (
+
       <div className="col-sm-6 col-md-offset-3">
-        <div className="col-sm-12">
-          <h3 className="text-center"> Todo List </h3>
+          <h1 className="text-center">Welcome!
+            <div className="col-sm-12 text-center">
+              <input type="text" value={name} onChange={this.handleName} />
+            </div>
+          </h1>
+
+          <h2 className="text-center"> Todo List </h2>
           <AddItem add={this.handleAddItem}/>
           <List items={this.state.list} remove={this.handleRemoveItem}/>
-        </div>
       </div>
     )
   }
