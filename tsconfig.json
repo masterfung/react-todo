@@ -1,0 +1,18 @@
+{
+    "compilerOptions": {
+        "target": "es5",
+        "module": "amd",
+        "outDir": "./build"
+    },
+    "filesGlob": [
+        "./**/*.ts",
+        "!./node_modules/**/*.ts"
+    ],
+    "files": [
+        "./app/app.ts",
+        "./app/blah.ts",
+        "./typings/react/react-addons.d.ts",
+        "./typings/react/react.d.ts",
+        "./typings/tsd.d.ts"
+    ]
+}
