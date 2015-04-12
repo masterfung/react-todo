@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "github.com/masterfung/react-todo-ts"
+    "url": "github.com/masterfung/react-todo"
   },
   "keywords": [
     "react",
@@ -22,14 +22,17 @@
   },
   "homepage": "https://github.com/masterfung/react-todo",
   "dependencies": {
+    "moment": "^2.10.2",
     "react": "^0.13.1",
     "react-addons": "^0.9.1-deprecated",
+    "stylus": "^0.50.0",
     "webpack": "^1.8.4"
   },
   "devDependencies": {
     "babel-core": "^5.0.12",
     "babel-loader": "^5.0.0",
     "jsx-loader": "^0.13.1",
+    "stylus-loader": "^1.1.0",
     "webpack": "^1.8.4"
   }
 }

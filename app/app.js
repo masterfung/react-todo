@@ -62,7 +62,10 @@ let List = React.createClass({
     let listItems = this.props.items.map((item, idx) =>
     {
       return (
-        <li key={idx} className="list-group-item" style={styles.listGroup}>
+        <li
+          key={idx}
+          className="list-group-item"
+          style={styles.listGroup}>
           <span
             className="glyphicon glyphicon-remove"
             style={styles.removeItem}
@@ -87,7 +90,7 @@ let ListContainer = React.createClass({
   getInitialState(){
     return {
       list: [],
-      name: "Stranger! Change Name Here",
+      name: "",
       time: new Date()
     }
   },
@@ -115,15 +118,23 @@ let ListContainer = React.createClass({
 
       <div className="col-sm-6 col-md-offset-3">
           <h1 className="text-center">Welcome! Your Todo List</h1>
-          {time}
+          <p className="text-center">Time: {time}</p>
           <div className="col-sm-12 text-center">
-            <h5 className='text-center'>Enter your name:
-              <input type="text" value={name} onChange={this.handleName} />
-            </h5>
+            <h5 className='text-center'>Enter your name:</h5>
+            <input
+              type="text"
+              className="form-control"
+              value={name}
+              onChange={this.handleName}
+              placeholder="Stranger! Change Name Here" />
+            <hr />
           </div>
+
           <h2 className="text-center"> </h2>
           <AddItem add={this.handleAddItem}/>
-          <List items={this.state.list} remove={this.handleRemoveItem}/>
+          <List
+            items={this.state.list}
+            remove={this.handleRemoveItem}/>
       </div>
     )
   }
