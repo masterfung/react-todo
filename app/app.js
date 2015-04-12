@@ -1,6 +1,8 @@
 let React = require('react/addons')
 let moment = require('moment')
 
+moment().format();
+
 let AddItem = React.createClass({
   getInitialState(){
     return {
@@ -90,8 +92,8 @@ let ListContainer = React.createClass({
   getInitialState(){
     return {
       list: [],
-      name: "",
-      time: new Date()
+      name: "Beautiful",
+      currentTime: new Date()
     }
   },
   handleAddItem(newItem) {
@@ -113,14 +115,16 @@ let ListContainer = React.createClass({
   },
   render() {
     let name = this.state.name;
-    let time = this.state.time;
+    let time = moment(this.state.currentTime.toString()).format('MM/DD/YYYY hh:mm A');
+    console.log(this.state.currentTime)
     return (
 
       <div className="col-sm-6 col-md-offset-3">
-          <h1 className="text-center">Welcome! Your Todo List</h1>
-          <p className="text-center">Time: {time}</p>
+          <h1 className="text-center">Welcome {name}! Your Todo List</h1>
+          <p className="text-center"><b>Time</b>: {time}</p>
           <div className="col-sm-12 text-center">
-            <h5 className='text-center'>Enter your name:</h5>
+            <h5 className='text-center'>We know you are beautiful, but feel free
+            to change to your name:</h5>
             <input
               type="text"
               className="form-control"
