@@ -1,7 +1,8 @@
-let React = require('react/addons')
-let moment = require('moment')
+let React = require('react/addons');
+let moment = require('moment');
+let rb = require('react-bootstrap');
 
-moment().format();
+let {Button} = rb
 
 let AddItem = React.createClass({
   getInitialState(){
@@ -68,13 +69,13 @@ let List = React.createClass({
           key={idx}
           className="list-group-item"
           style={styles.listGroup}>
+          <span style={styles.todoItem}>
+            {item}
+          </span>
           <span
             className="glyphicon glyphicon-remove"
             style={styles.removeItem}
             onClick={this.props.remove.bind(null, idx)}>
-          </span>
-          <span style={styles.todoItem}>
-            {item}
           </span>
         </li>
       )
@@ -93,9 +94,12 @@ let ListContainer = React.createClass({
     return {
       list: [],
       name: "Beautiful",
-      currentTime: new Date()
+      time: moment(Date.now()).format('MM/DD/gggg hh:mm A')
     }
   },
+  // propTypes() {
+  //   time: React.propTypes.number.isRequired
+  // },
   handleAddItem(newItem) {
     this.setState({
       list: this.state.list.concat([newItem])
@@ -115,13 +119,11 @@ let ListContainer = React.createClass({
   },
   render() {
     let name = this.state.name;
-    let time = moment(this.state.currentTime.toString()).format('MM/DD/YYYY hh:mm A');
-    console.log(this.state.currentTime)
     return (
 
       <div className="col-sm-6 col-md-offset-3">
-          <h1 className="text-center">Welcome {name}! Your Todo List</h1>
-          <p className="text-center"><b>Time</b>: {time}</p>
+          <h1 className="text-center">Welcome {name}! <br /> Your Todo List</h1>
+          <Button className="btn btn-primary"><b>Time</b>: {this.state.time}</Button>
           <div className="col-sm-12 text-center">
             <h5 className='text-center'>We know you are beautiful, but feel free
             to change to your name:</h5>
