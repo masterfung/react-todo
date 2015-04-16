@@ -1,16 +1,11 @@
+var path = require('path');
 var webpack = require('webpack');
-
-// var plugins = [
-//   new webpack.optimize.CommonsChunkPlugin('build/common.js'),
-//   new webpack.DefinePlugin({
-//     'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
-//   })
-// ];
+var CommonsChunkPlugin = require('webpack/lib/optimize/CommonsChunkPlugin');
 
 module.exports = {
   devtool: 'eval',
 
-  entry: './app/scripts/app.js',
+  entry: './src/scripts/app.js',
   output: {
     path: __dirname + '/dist/scripts/',
     filename: 'app.js'
@@ -27,15 +22,11 @@ module.exports = {
         loaders: [ 'babel-loader' ]
       },
       {
-        test  : /\.styl$/,            // require('**.styl')の設定
+        test  : /\.styl$/,
         loader: 'style!css!stylus'
     }],
     resolve: {
        extensions: ['', '.js', '.styl']
-     },
-    externals: {
-      // Reactをnpmからでなくグローバルから取得する
-      'react': 'React'
-    },
+     }
   }
 };
