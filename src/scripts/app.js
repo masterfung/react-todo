@@ -39,7 +39,7 @@ let AddItem = React.createClass({
   }
 })
 
-let List = React.createClass({
+class List extends React.Component {
   render(){
     let styles = {
       uList: {
@@ -89,7 +89,7 @@ let List = React.createClass({
       )
 
   }
-})
+}
 
 let ListContainer = React.createClass({
   getInitialState(){
@@ -148,15 +148,13 @@ let ListContainer = React.createClass({
   }
 })
 
-let ToDo = React.createClass({
+class ToDo extends React.Component {
   render(){
-    return (
-      <div className="row">
+    return (  <div className="row">
           <ListContainer />
-        </div>
-    )
+        </div>)
   }
-})
+}
 
 React.render(
   <ToDo />,
