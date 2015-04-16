@@ -2,6 +2,8 @@ let React = require('react/addons');
 let moment = require('moment');
 let rb = require('react-bootstrap');
 
+require('../styles/main.styl');
+
 let {Button} = rb
 
 let AddItem = React.createClass({

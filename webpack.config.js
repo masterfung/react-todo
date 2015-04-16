@@ -1,5 +1,5 @@
-// var webpack = require('webpack');
-//
+var webpack = require('webpack');
+
 // var plugins = [
 //   new webpack.optimize.CommonsChunkPlugin('build/common.js'),
 //   new webpack.DefinePlugin({
@@ -8,23 +8,34 @@
 // ];
 
 module.exports = {
-  entry: "./app/app.js",
+  devtool: 'eval',
+
+  entry: './app/scripts/app.js',
   output: {
-    filename: "build/bundle.js"
+    path: __dirname + '/dist/scripts/',
+    filename: 'app.js'
+  },
+  cache : true,
+  stats : {
+    colors : true,
+    reasons: true
   },
   module: {
-    loaders: [
-      {
+    loaders: [{
         test: /\.js$/,
         exclude: /node_modules/,
         loaders: [ 'babel-loader' ]
       },
       {
-        test: /\.styl$/,
-        loader: 'css-loader!stylus-loader?paths=node_modules/bootstrap-stylus/stylus/'
-      }
-    ]
-  },
-
-  // plugins: plugins
+        test  : /\.styl$/,            // require('**.styl')の設定
+        loader: 'style!css!stylus'
+    }],
+    resolve: {
+       extensions: ['', '.js', '.styl']
+     },
+    externals: {
+      // Reactをnpmからでなくグローバルから取得する
+      'react': 'React'
+    },
+  }
 };
