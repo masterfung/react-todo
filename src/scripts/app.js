@@ -1,10 +1,8 @@
-let React = require('react/addons');
-let moment = require('moment');
-let rb = require('react-bootstrap');
+import React from 'react/addons';
+import moment from 'moment';
+import {Button} from 'react-bootstrap';
 
-require('../styles/main.styl');
-
-let {Button} = rb
+// require('src/styles/main.styl');
 
 let AddItem = React.createClass({
   getInitialState(){
