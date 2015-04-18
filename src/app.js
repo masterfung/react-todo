@@ -5,17 +5,19 @@ import moment from 'moment';
 import { Button } from 'react-bootstrap';
 
 
-let AddItem = React.createClass({
-  getInitialState(){
-    return {
-      newItem: ''
+class AddItem extends React.Component{
+    constructor() {
+	    super();
+	    this.handleChange = this.handleChange.bind(this);
+	    this.handleSubmit = this.handleSubmit.bind(this);
+	    this.state = {newItem: ''}
     }
-  },
+
   handleChange(e){
     this.setState({
       newItem: e.target.value
     })
-  },
+  }
   handleSubmit(e){
     if(e.keyCode === 13) {
       this.props.add(this.state.newItem);
@@ -23,7 +25,7 @@ let AddItem = React.createClass({
         newItem: ''
       });
     }
-  },
+  }
   render(){
     return (
       <div>
@@ -36,7 +38,7 @@ let AddItem = React.createClass({
       </div>
     )
   }
-})
+}
 
 class List extends React.Component {
   render(){
@@ -80,7 +82,7 @@ class List extends React.Component {
           </span>
         </li>
       )
-    })
+    });
       return (
         <ul style={styles.uList}>
           {listItems}
@@ -90,34 +92,36 @@ class List extends React.Component {
   }
 }
 
-let ListContainer = React.createClass({
-  getInitialState(){
-    return {
-      list: [],
-      name: "Beautiful",
-      time: moment(Date.now()).format('MM/DD/gggg hh:mm A')
-    }
-  },
-  // propTypes() {
-  //   time: React.propTypes.number.isRequired
-  // },
+class ListContainer extends React.Component{
+  constructor(){
+    super();
+	this.handleAddItem = this.handleAddItem.bind(this);
+	this.handleRemoveItem = this.handleRemoveItem.bind(this);
+	this.handleName = this.handleName.bind(this);
+	this.state = {
+		list: [],
+		name: "Beautiful",
+		time: moment(Date.now()).format('MM/DD/gggg hh:mm A')
+	}
+  }
+
   handleAddItem(newItem) {
     this.setState({
       list: this.state.list.concat([newItem])
     })
-  },
+  }
   handleRemoveItem(idx) {
     let newList = this.state.list;
     newList.splice(idx, 1);
     this.setState({
       list: newList
     })
-  },
+  }
   handleName(e) {
     this.setState({
       name: e.target.value
     })
-  },
+  }
   render() {
     let name = this.state.name;
     return (
@@ -145,7 +149,7 @@ let ListContainer = React.createClass({
       </div>
     )
   }
-})
+}
 
 class ToDo extends React.Component {
   render(){
