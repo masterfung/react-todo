@@ -3,7 +3,7 @@ By: Tsung Hung
 ==========
 
 ##Introduction
-
+A simple todo project that uses React 0.13.x. Simple greetings and name are added to the app to add flavor.
 
 ##Project Progress
 - Implementation (completed)

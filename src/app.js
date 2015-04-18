@@ -1,8 +1,10 @@
-import React from 'react/addons';
-import moment from 'moment';
-import {Button} from 'react-bootstrap';
+require('./styles/main.styl');
 
-// require('src/styles/main.styl');
+import React from '../node_modules/react/addons';
+import moment from 'moment';
+import { Router } from 'react-router'
+import { Button } from 'react-bootstrap';
+
 
 let AddItem = React.createClass({
   getInitialState(){
@@ -123,7 +125,7 @@ let ListContainer = React.createClass({
 
       <div className="col-sm-6 col-md-offset-3">
           <h1 className="text-center">Welcome {name}! <br /> Your Todo List</h1>
-          <Button className="btn btn-primary"><b>Time</b>: {this.state.time}</Button>
+          <Button className="btn btn-primary button-center"><b>Time</b>: {this.state.time}</Button>
           <div className="col-sm-12 text-center">
             <h5 className='text-center'>We know you are beautiful, but feel free
             to change to your name:</h5>

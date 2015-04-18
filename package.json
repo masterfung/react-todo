@@ -22,12 +22,14 @@
   },
   "homepage": "https://github.com/masterfung/react-todo",
   "dependencies": {
+    "compression-webpack-plugin": "^0.2.0",
     "css-loader": "^0.10.1",
     "jsx-loader": "^0.13.1",
     "moment": "^2.10.2",
     "react": "^0.13.1",
     "react-addons": "^0.9.1-deprecated",
     "react-bootstrap": "^0.20.3",
+    "react-router": "^0.13.2",
     "style-loader": "^0.10.2",
     "stylus": "^0.50.0",
     "stylus-loader": "^1.1.0",
@@ -36,7 +38,9 @@
   "devDependencies": {
     "babel-core": "^5.0.12",
     "babel-loader": "^5.0.0",
+    "expose": "^0.1.4",
     "jsx-loader": "^0.13.1",
+    "react-hot-loader": "^1.2.5",
     "stylus-loader": "^1.1.0"
   }
 }
