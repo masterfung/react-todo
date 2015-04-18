@@ -2,7 +2,6 @@ require('./styles/main.styl');
 
 import React from '../node_modules/react/addons';
 import moment from 'moment';
-import { Router } from 'react-router'
 import { Button } from 'react-bootstrap';
 
 
