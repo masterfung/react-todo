@@ -24,6 +24,7 @@
   "dependencies": {
     "compression-webpack-plugin": "^0.2.0",
     "css-loader": "^0.10.1",
+    "firebase": "^2.2.4",
     "jsx-loader": "^0.13.1",
     "moment": "^2.10.2",
     "react": "^0.13.1",

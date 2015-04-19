@@ -3,6 +3,11 @@ require('./styles/main.styl');
 import React from '../node_modules/react/addons';
 import moment from 'moment';
 import { Button } from 'react-bootstrap';
+import Firebase from 'firebase';
+
+let HOST = "https://reactjstodo.firebaseapp.com";
+
+let ref = new Firebase(HOST);
 
 
 class AddItem extends React.Component{
@@ -153,9 +158,11 @@ class ListContainer extends React.Component{
 
 class ToDo extends React.Component {
   render(){
-    return (  <div className="row">
+    return (
+	    <div className="row">
           <ListContainer />
-        </div>)
+        </div>
+    )
   }
 }
 
