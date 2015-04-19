@@ -62,6 +62,7 @@ class AddItem extends React.Component{
     return (
         <div>
           <Item items={ this.state.items } />
+          <h2 className='text-center'>Enter Your Item:</h2>
           <form onSubmit={ this.handleSubmit }>
             <input
                 className = "form-control"
