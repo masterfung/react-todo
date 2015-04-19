@@ -5,162 +5,111 @@ import moment from 'moment';
 import { Button } from 'react-bootstrap';
 import Firebase from 'firebase';
 
-let HOST = "https://reactjstodo.firebaseapp.com";
-
-let ref = new Firebase(HOST);
-
+class Item extends React.Component{
+  render() {
+    let createItem = function(item, index) {
+      return <li key={ index }>{ item.text }</li>;
+    };
+    return <ul>{ this.props.items.map(createItem) }</ul>;
+  }
+}
 
 class AddItem extends React.Component{
-    constructor() {
-	    super();
-	    this.handleChange = this.handleChange.bind(this);
-	    this.handleSubmit = this.handleSubmit.bind(this);
-	    this.state = {newItem: ''}
-    }
-
-  handleChange(e){
-    this.setState({
-      newItem: e.target.value
-    })
-  }
-  handleSubmit(e){
-    if(e.keyCode === 13) {
-      this.props.add(this.state.newItem);
-      this.setState({
-        newItem: ''
-      });
-    }
-  }
-  render(){
-    return (
-      <div>
-        <input type="text"
-          className="form-control"
-          value={this.state.newItem}
-          placeholder="New Item"
-          onKeyDown={this.handleSubmit}
-          onChange={this.handleChange} />
-      </div>
-    )
-  }
-}
-
-class List extends React.Component {
-  render(){
-    let styles = {
-      uList: {
-        paddingLeft: 0,
-        listStyleType: "none"
-      },
-      listGroup: {
-        margin: '5px 0',
-        borderRadius: 5
-      },
-      removeItem: {
-        fontSize: 20,
-        float: "left",
-        position: "absolute",
-        top: 12,
-        left: 6,
-        cursor: "pointer",
-        color: "rgb(222, 79, 79)"
-      },
-      todoItem: {
-        paddingLeft: 20,
-        fontSize: 17
-      }
-    };
-    let listItems = this.props.items.map((item, idx) =>
-    {
-      return (
-        <li
-          key={idx}
-          className="list-group-item"
-          style={styles.listGroup}>
-          <span style={styles.todoItem}>
-            {item}
-          </span>
-          <span
-            className="glyphicon glyphicon-remove"
-            style={styles.removeItem}
-            onClick={this.props.remove.bind(null, idx)}>
-          </span>
-        </li>
-      )
-    });
-      return (
-        <ul style={styles.uList}>
-          {listItems}
-        </ul>
-      )
-
-  }
-}
-
-class ListContainer extends React.Component{
-  constructor(){
+  constructor() {
     super();
-	this.handleAddItem = this.handleAddItem.bind(this);
-	this.handleRemoveItem = this.handleRemoveItem.bind(this);
-	this.handleName = this.handleName.bind(this);
-	this.state = {
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.onChange = this.onChange.bind(this);
+    this.state = {
+      items: [],
+      text: ""
+    }
+  }
+
+  componentWillMount() {
+    this.firebaseRef = new Firebase("https://reactjstodo.firebaseio.com/items/");
+    this.firebaseRef.limitToLast(25).on("child_added", function(dataSnapshot) {
+      // Only keep track of 25 items at a time
+      if (this.items.length === 25) {
+        this.items.splice(0, 1);
+      }
+
+      this.items.push(dataSnapshot.val());
+      this.setState({
+        items: this.items
+      });
+    }.bind(this));
+  }
+
+  componentWillUnmount() {
+    this.firebaseRef.off();
+  }
+
+  onChange(e) {
+    this.setState({text: e.target.value});
+  }
+
+  handleSubmit(e) {
+    e.preventDefault();
+    if (this.state.text && this.state.text.trim().length !== 0) {
+      this.firebaseRef.push({
+        text: this.state.text
+      });
+      this.setState({text: ""});
+    }
+  }
+
+  render() {
+    return (
+        <div>
+          <Item items={ this.state.items } />
+          <form onSubmit={ this.handleSubmit }>
+            <input
+                className = "form-control"
+                onChange={ this.onChange }
+                value={ this.state.text } />
+          </form>
+        </div>
+    );
+  }
+}
+
+class ToDo extends React.Component {
+  constructor() {
+    super();
+    this.handleName = this.handleName.bind(this);
+    this.state = {
 		list: [],
 		name: "Beautiful",
 		time: moment(Date.now()).format('MM/DD/gggg hh:mm A')
 	}
   }
 
-  handleAddItem(newItem) {
-    this.setState({
-      list: this.state.list.concat([newItem])
-    })
-  }
-  handleRemoveItem(idx) {
-    let newList = this.state.list;
-    newList.splice(idx, 1);
-    this.setState({
-      list: newList
-    })
-  }
   handleName(e) {
     this.setState({
       name: e.target.value
     })
   }
-  render() {
+
+  render(){
     let name = this.state.name;
     return (
-
-      <div className="col-sm-6 col-md-offset-3">
+        <div className="col-sm-6 col-md-offset-3">
           <h1 className="text-center">Welcome {name}! <br /> Your Todo List</h1>
           <Button className="btn btn-primary button-center"><b>Time</b>: {this.state.time}</Button>
           <div className="col-sm-12 text-center">
             <h5 className='text-center'>We know you are beautiful, but feel free
             to change to your name:</h5>
             <input
-              type="text"
-              className="form-control"
-              value={name}
-              onChange={this.handleName}
-              placeholder="Stranger! Change Name Here" />
-            <hr />
-          </div>
+                type="text"
+                className="form-control"
+                value={name}
+                onChange={this.handleName}
+                placeholder="Stranger! Change Name Here" />
+              <hr />
+            </div>
 
-          <h2 className="text-center"> </h2>
-          <AddItem add={this.handleAddItem}/>
-          <List
-            items={this.state.list}
-            remove={this.handleRemoveItem}/>
-      </div>
-    )
-  }
-}
-
-class ToDo extends React.Component {
-  render(){
-    return (
-	    <div className="row">
-          <ListContainer />
+            <h2 className="text-center"> </h2>
+            <AddItem />
         </div>
     )
   }
@@ -169,4 +118,4 @@ class ToDo extends React.Component {
 React.render(
   <ToDo />,
   document.querySelector('.container')
-)
+);
