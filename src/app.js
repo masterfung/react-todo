@@ -119,7 +119,6 @@ class AddItem extends React.Component{
 
   componentDidMount() {
     this.firebaseRef = new Firebase("https://reactjstodo.firebaseio.com/");
-    this.firebaseRef = firebaseRef.child(`users/${this.props.user}`);
     //this.firebaseRef.on("child_added", (dataSnapshot) => {
     //  // Only keep track of 25 items at a time
     //  //if (this.items.length === 25) {
@@ -208,8 +207,10 @@ class ToDo extends React.Component {
             {this.state.user === null ? (
                 <Authorization onAuth={this.handleAuth} />
             ) : (
-                <AddItem user={this.state.user} />
+                <Dashboard user={this.state.user} />,
+                <AddItem />
             )}
+
         </div>
     )
   }
@@ -219,3 +220,5 @@ React.render(
   <ToDo />,
   document.querySelector('.container')
 );
+
+window.firebaseRef = firebaseRef;
