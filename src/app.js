@@ -149,7 +149,8 @@ class AddItem extends React.Component{
   constructor() {
     super();
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.onChange = this.onChange.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleRemoveItem = this.handleRemoveItem.bind(this);
     this.state = {
       items: [],
       text: ""
@@ -167,7 +168,7 @@ class AddItem extends React.Component{
     this.firebaseRef.on('child_removed', (snapshot) => {
       let key = snapshot.key();
       let newList = this.state.items.filter((item) => {
-        return item.key != key;
+        return item.key !== key;
       });
       this.setState({
         items: newList
