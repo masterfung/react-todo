@@ -1,6 +1,6 @@
-React Todo
-By: Tsung Hung
+#React Todo
 ==========
+By: Tsung Hung | @masterfung
 
 ##Introduction
 A simple todo project that uses React 0.13.x. Simple greetings and name are added to the app to add flavor.
@@ -10,7 +10,7 @@ A simple todo project that uses React 0.13.x. Simple greetings and name are adde
  *Hook up Firebase (completed)
  *Pull list (next)
  *Integrate social login to get your own list (not started)
- *Get a live demo working (not started)
+ *Get a live demo working on Heroku (not started)
  
 ##Getting Started:
 1. `git clone` or Download as zip and extract
