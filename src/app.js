@@ -89,7 +89,7 @@ class Dashboard extends React.Component {
             {things.map((thing) => (
                 <li>
                   {thing.name} {' '}
-                  <button onClick={this.remove.bind(this, thing)}>remove</button>
+                  <button onClick={this.remove.bind(this, thing)}>Remove</button>
                 </li>
             ))}
           </ul>
@@ -103,6 +103,7 @@ class Item extends React.Component {
     let styles = {
       uList: {
         paddingLeft: 0,
+        marginTop: 20,
         listStyleType: "none"
       },
       listGroup: {
@@ -136,7 +137,7 @@ class Item extends React.Component {
           </span>
           </li>
       )
-    }.bind(this));
+    });
     return (
         <ul style={styles.uList}>
           {listItems}
@@ -163,7 +164,7 @@ class AddItem extends React.Component{
       this.setState({
         items: this.state.items.concat([{key: snapshot.key(), val: snapshot.val()}])
       })
-    }.bind(this));
+    });
 
     this.firebaseRef.on('child_removed', (snapshot) => {
       let key = snapshot.key();
@@ -173,7 +174,7 @@ class AddItem extends React.Component{
       this.setState({
         items: newList
       });
-    }.bind(this))
+    })
   }
 
   componentWillUnmount() {
