@@ -8,14 +8,14 @@ A simple todo project that uses React 0.13.x. Simple greetings and name are adde
 ##Project Progress
  *Implementation (completed)
  *Hook up Firebase (completed)
- *Pull list (next)
- *Integrate social login to get your own list (not started)
+ *Pull list and show based on user input (completed)
+ *Integrate social login & segregate struture so users can have their own list own list (next)
  *Get a live demo working on Heroku (not started)
  
 ##Getting Started:
 1. `git clone` or Download as zip and extract
 2.`npm install`
-3. `webpack` in the directory
+3. `webpack` and `webpack --watch` in the directory. The --watch flag is to watch for changes
 4. `http-server` (or whatever http server you prefer, to install http-server via `npm -g install http-server`)
 
 ##Questions or Feedback
