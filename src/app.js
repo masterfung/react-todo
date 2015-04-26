@@ -2,12 +2,14 @@ require('./styles/main.styl');
 
 import React from '../node_modules/react/addons';
 import moment from 'moment';
+import Router  from 'react-router';
+let { Route, RouteHandler, Link } = Router;
 import { Button } from 'react-bootstrap';
 import Firebase from 'firebase';
 
-let firebaseRef;
+let firebaseRef = new Firebase("https://reactjstodo.firebaseio.com/");
 
-var toArray = (obj) => {
+let toArray = (obj) => {
   if (obj == null)
     return [];
   return Object.keys(obj).map((key) => {
@@ -21,32 +23,47 @@ class Authorization extends React.Component {
     super();
   }
   login() {
-    firebaseRef.authWithOAuthPopup('github', (err, authData) => {
+    console.log(this.props.onAuth)
+    firebaseRef.authWithOAuthPopup('twitter', (err, authData) => {
       if (err) {
         console.log(err);
         alert("Something went wrong! Please try again later!");
       } else {
+        console.log(authData.uid);
         this.props.onAuth(authData.uid);
       }
     });
   }
 
   render() {
+    let login = this.login.bind(this);
     return (
         <div>
-          <h1 className="text-center">Login Below to Save Your Items:</h1>
-          <Button onClick={this.login}>
-            Login with Github
+          <h1 className="text-center">Log In Below to Save Your Items:</h1>
+          <Button onClick={login}>
+            Login with Twitter
           </Button>
         </div>
     )
   }
 }
 
+class Logout extends React.Component {
+  constructor() {
+    super();
+  }
+
+  componentDidMount() {
+
+  }
+}
+
+
 class Dashboard extends React.Component {
   constructor(){
     super();
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleFirebaseChange = this.handleFirebaseChange.bind(this);
     this.remove = this.remove.bind(this);
     this.state = {
       things: []
@@ -54,12 +71,12 @@ class Dashboard extends React.Component {
 
   }
   componentDidMount() {
-    this.firebaseRef = firebaseRef.child(`users/${this.props.user}`);
-    this.firebaseRef.on('value', this.handleFirebaseChange);
+    firebaseRef = firebaseRef.child(`users/${this.props.user}`);
+    firebaseRef.on('value', this.handleFirebaseChange);
   }
 
   componentWillUnmount () {
-    this.firebaseRef.off('value', this.handleFirebaseChange);
+    firebaseRef.off('value', this.handleFirebaseChange);
   }
 
   handleFirebaseChange (snapshot) {
@@ -69,12 +86,12 @@ class Dashboard extends React.Component {
   handleSubmit (event) {
     event.preventDefault();
     var name = event.target.elements[0].value;
-    this.firebaseRef.push({ name });
+    firebaseRef.push({ name });
     event.target.reset();
   }
 
   remove (thing) {
-    this.firebaseRef.child(thing._key).remove();
+    firebaseRef.child(thing._key).remove();
   }
 
   render () {
@@ -82,14 +99,13 @@ class Dashboard extends React.Component {
     return (
         <div>
           <form onSubmit={this.handleSubmit}>
-            <input/>
-            <button type="submit">Wow</button>
+            <input className="form-control" />
           </form>
           <ul>
-            {things.map((thing) => (
-                <li>
+            {things.map((thing, index) => (
+                <li key={index}>
                   {thing.name} {' '}
-                  <button onClick={this.remove.bind(this, thing)}>Remove</button>
+                  <Button onClick={this.remove.bind(this, thing)}>Remove</Button>
                 </li>
             ))}
           </ul>
@@ -159,14 +175,14 @@ class AddItem extends React.Component{
   }
 
   componentDidMount() {
-     this.firebaseRef = new Firebase("https://reactjstodo.firebaseio.com/");
-    this.firebaseRef.on("child_added", (snapshot) => {
+     //this.firebaseRef = new Firebase("https://reactjstodo.firebaseio.com/");
+    firebaseRef.on("child_added", (snapshot) => {
       this.setState({
         items: this.state.items.concat([{key: snapshot.key(), val: snapshot.val()}])
       })
     });
 
-    this.firebaseRef.on('child_removed', (snapshot) => {
+    firebaseRef.on('child_removed', (snapshot) => {
       let key = snapshot.key();
       let newList = this.state.items.filter((item) => {
         return item.key !== key;
@@ -178,7 +194,7 @@ class AddItem extends React.Component{
   }
 
   componentWillUnmount() {
-    this.firebaseRef.off();
+    firebaseRef.off();
   }
 
   handleChange(e) {
@@ -190,7 +206,7 @@ class AddItem extends React.Component{
   handleSubmit(e) {
     e.preventDefault();
     if (this.state.text && this.state.text.trim().length !== 0) {
-      this.firebaseRef.push({
+      firebaseRef.push({
         text: this.state.text
       });
       this.setState({text: ""});
@@ -199,7 +215,7 @@ class AddItem extends React.Component{
 
   handleRemoveItem(index) {
     let item = this.state.items[index];
-    this.firebaseRef.child(item.key).remove();
+    firebaseRef.child(item.key).remove();
   }
 
   render() {
@@ -223,12 +239,18 @@ class ToDo extends React.Component {
   constructor() {
     super();
     this.handleName = this.handleName.bind(this);
+    this.handleAuth = this.handleAuth.bind(this);
     this.state = {
-		list: [],
 		name: "Beautiful",
 		time: moment(Date.now()).format('MM/DD/gggg hh:mm A'),
         user: null
 	}
+  }
+
+  handleAuth(uid) {
+    this.setState({
+      user: uid
+    });
   }
 
   handleName(e) {
@@ -241,7 +263,6 @@ class ToDo extends React.Component {
     let name = this.state.name;
     return (
         <div className="col-sm-6 col-md-offset-3">
-
           <h1 className="text-center">Welcome {name}! <br /> Your Todo List</h1>
           <Button className="btn btn-primary button-center"><b>Time</b>: {this.state.time}</Button>
           <div className="col-sm-12 text-center">
@@ -257,16 +278,30 @@ class ToDo extends React.Component {
             </div>
 
             <h2 className="text-center"> </h2>
-          <AddItem />
+          <Dashboard user={this.state.user}/>
+          {this.state.user === null ? (
+              <Authorization onAuth={this.handleAuth} />
+          ) : (
+              <Link to='dashboard'><Dashboard user={this.state.user}/></Link>,
+              <AddItem />
+          )}
 
         </div>
     )
   }
 }
 
-React.render(
-  <ToDo />,
-  document.querySelector('.container')
+let routes = (
+    <Route handler={ToDo}>
+      <Route name="login" handler={Authorization} />
+      <Route name="logout" handler={Logout} />
+      <Route name="dashboard" handler={Dashboard} />
+    </Route>
 );
 
-window.firebaseRef = firebaseRef;
+Router.run(routes, (Handler) => {
+  React.render(
+      <Handler />,
+      document.querySelector('.container')
+  );
+});

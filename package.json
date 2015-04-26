@@ -39,8 +39,15 @@
     "babel-core": "^5.0.12",
     "babel-loader": "^5.0.0",
     "expose": "^0.1.4",
+    "express": "^4.12.3",
+    "grunt": "^0.4.5",
+    "grunt-webpack": "^1.0.8",
     "jsx-loader": "^0.13.1",
+    "lodash": "^3.7.0",
+    "node-jsx": "^0.12.4",
     "react-hot-loader": "^1.2.5",
-    "stylus-loader": "^1.1.0"
+    "react-router": "^0.13.2",
+    "stylus-loader": "^1.1.0",
+    "webpack-dev-server": "^1.8.0"
   }
 }
